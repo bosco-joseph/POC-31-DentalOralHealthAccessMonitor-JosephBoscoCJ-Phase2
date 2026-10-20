@@ -91,6 +91,7 @@ export default function Home() {
   const [region, setRegion] = useState("All regions");
   const [ageBand, setAgeBand] = useState("All age bands");
   const [treatment, setTreatment] = useState("All treatments");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -263,15 +264,11 @@ export default function Home() {
       <header className="border-b border-slate-800 bg-[#080c12] px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-400">
-              Dental Health Intelligence
-            </p>
-
-            <h1 className="mt-1 text-xl font-semibold">
-              Dental & Oral Health Access Monitor
+            <h1 className="text-sm font-semibold text-slate-100">
+              Infocreon Internship - Dental & Oral Health Access Monitor
             </h1>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-0.5 text-xs text-slate-500">
               Gulf region healthcare access intelligence
             </p>
           </div>
@@ -288,11 +285,24 @@ export default function Home() {
             <div className="rounded border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-[10px] font-medium uppercase tracking-wider text-amber-400">
               Synthetic PoC Data
             </div>
+
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="text-[10px] uppercase tracking-wider text-slate-400">100% Connected</span>
+              <button
+                type="button"
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="flex h-7 w-7 items-center justify-center rounded border border-cyan-500/30 bg-cyan-500/10 text-xs font-semibold text-cyan-400 transition hover:bg-cyan-500/20"
+                title="Toggle Intelligence Panel"
+              >
+                i
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="grid min-h-[calc(100vh-89px)] grid-cols-1 lg:grid-cols-[minmax(0,7fr)_minmax(300px,3fr)]">
+      <div className={`grid min-h-[calc(100vh-89px)] grid-cols-1 ${isSidebarOpen ? "lg:grid-cols-[minmax(0,7fr)_minmax(300px,3fr)]" : "lg:grid-cols-1"}`}>
         <section className="min-w-0 border-r border-slate-800 p-5">
           {/* Dynamic KPI Cards */}
           <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
@@ -579,282 +589,192 @@ export default function Home() {
         </section>
 
         {/* Sidebar Controls */}
-        <aside className="min-w-0 bg-[#070b11] p-5">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-cyan-400">
-            Intelligence Controls
-          </p>
-
-          <h2 className="mt-1 text-sm font-semibold text-slate-200">
-            Filters & Context
-          </h2>
-
-          <div className="mt-5 space-y-3">
-            <Filter
-              label="Region"
-              value={region}
-              options={regions}
-              onChange={setRegion}
-            />
-
-            <Filter
-              label="Age Band"
-              value={ageBand}
-              options={ageBands}
-              onChange={setAgeBand}
-            />
-
-            <Filter
-              label="Treatment Type"
-              value={treatment}
-              options={treatments}
-              onChange={setTreatment}
-            />
-          </div>
-
-          <div className="mt-6 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
-              Why This Matters
-            </h2>
-
-            <p className="mt-3 text-xs leading-relaxed text-slate-400">
-              Uneven dental workforce distribution, disease burden, screening
-              coverage, and treatment waiting times can create differences in
-              access to oral healthcare across regions.
+        {isSidebarOpen && (
+          <aside className="min-w-0 bg-[#070b11] p-5">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-cyan-400">
+              Intelligence Controls
             </p>
-          </div>
 
-          <div className="mt-4 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
-              Who Controls the Rail
+            <h2 className="mt-1 text-sm font-semibold text-slate-200">
+              Filters & Context
             </h2>
 
-            <div className="mt-3 space-y-2 text-xs text-slate-400">
-              <p>FDI World Dental Federation</p>
-              <p>World Health Organization</p>
-              <p>Saudi Commission for Health Specialties</p>
-              <p>UAE MOHAP</p>
+            <div className="mt-5 space-y-3">
+              <Filter
+                label="Region"
+                value={region}
+                options={regions}
+                onChange={setRegion}
+              />
+
+              <Filter
+                label="Age Band"
+                value={ageBand}
+                options={ageBands}
+                onChange={setAgeBand}
+              />
+
+              <Filter
+                label="Treatment Type"
+                value={treatment}
+                options={treatments}
+                onChange={setTreatment}
+              />
             </div>
-          </div>
-          <div className="mt-4 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
-              Regional Snapshot
-            </h2>
 
-            {region === "All regions" ? (
-              <div className="mt-3 space-y-3">
-                <div>
-                  <p className="text-[9px] uppercase tracking-wider text-slate-500">
-                    Coverage
-                  </p>
+            <div className="mt-6 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+                Why This Matters
+              </h2>
 
-                  <p className="mt-1 text-sm font-semibold text-slate-200">
-                    6 Gulf regions
-                  </p>
-                </div>
+              <p className="mt-3 text-xs leading-relaxed text-slate-400">
+                Uneven dental workforce distribution, disease burden, screening
+                coverage, and treatment waiting times can create differences in
+                access to oral healthcare across regions.
+              </p>
+            </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <p className="text-[9px] text-slate-500">
-                      Dentists
-                    </p>
+            <div className="mt-4 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+                Who Controls the Rail
+              </h2>
 
-                    <p className="mt-1 text-sm font-semibold text-slate-200">
-                      {overview?.total_dentists?.toLocaleString() ?? "--"}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-[9px] text-slate-500">
-                      Screening
-                    </p>
-
-                    <p className="mt-1 text-sm font-semibold text-slate-200">
-                      {overview?.average_screening ?? "--"}%
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-[9px] text-slate-500">
-                    Highest access gap
-                  </p>
-
-                  <p className="mt-1 text-sm font-semibold text-amber-400">
-                    {overview?.highest_access_gap ?? "--"}
-                  </p>
-                </div>
+              <div className="mt-3 space-y-2 text-xs text-slate-400">
+                <p>FDI World Dental Federation</p>
+                <p>World Health Organization</p>
+                <p>Saudi Commission for Health Specialties</p>
+                <p>UAE MOHAP</p>
               </div>
-            ) : selectedDentistData &&
-              selectedScreeningData &&
-              selectedAccessGap ? (
-              <div className="mt-3">
-                <p className="text-sm font-semibold text-slate-200">
-                  {region}
-                </p>
+            </div>
+            <div className="mt-4 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+                Regional Snapshot
+              </h2>
 
-                <div className="mt-3 grid grid-cols-2 gap-3">
+              {region === "All regions" ? (
+                <div className="mt-3 space-y-3">
                   <div>
-                    <p className="text-[9px] text-slate-500">
-                      Dentists
+                    <p className="text-[9px] uppercase tracking-wider text-slate-500">
+                      Coverage
                     </p>
 
                     <p className="mt-1 text-sm font-semibold text-slate-200">
-                      {selectedDentistData.dentists.toLocaleString()}
+                      6 Gulf regions
                     </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <p className="text-[9px] text-slate-500">
+                        Dentists
+                      </p>
+
+                      <p className="mt-1 text-sm font-semibold text-slate-200">
+                        {overview?.total_dentists?.toLocaleString() ?? "--"}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-[9px] text-slate-500">
+                        Screening
+                      </p>
+
+                      <p className="mt-1 text-sm font-semibold text-slate-200">
+                        {overview?.average_screening ?? "--"}%
+                      </p>
+                    </div>
                   </div>
 
                   <div>
                     <p className="text-[9px] text-slate-500">
-                      Density
-                    </p>
-
-                    <p className="mt-1 text-sm font-semibold text-slate-200">
-                      {selectedDentistData.density}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-[9px] text-slate-500">
-                      Screening
-                    </p>
-
-                    <p className="mt-1 text-sm font-semibold text-slate-200">
-                      {selectedScreeningData.coverage}%
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-[9px] text-slate-500">
-                      Access gap
+                      Highest access gap
                     </p>
 
                     <p className="mt-1 text-sm font-semibold text-amber-400">
-                      {selectedAccessGap.access_gap_score}
+                      {overview?.highest_access_gap ?? "--"}
                     </p>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <p className="mt-3 text-xs text-slate-500">
-                Regional data unavailable.
-              </p>
-            )}
-          </div>
+              ) : selectedDentistData &&
+                selectedScreeningData &&
+                selectedAccessGap ? (
+                <div className="mt-3">
+                  <p className="text-sm font-semibold text-slate-200">
+                    {region}
+                  </p>
 
-          {selectedAccessGap && (
-            <div className="mt-4 rounded-lg border border-amber-500/20 bg-[#0a0f16] p-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xs font-semibold uppercase tracking-wider text-amber-400">
-                  Key Signal
-                </h2>
+                  <div className="mt-3 grid grid-cols-2 gap-3">
+                    <div>
+                      <p className="text-[9px] text-slate-500">
+                        Dentists
+                      </p>
 
-                <span className="rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-[9px] uppercase tracking-wider text-amber-400">
-                  High Priority
-                </span>
-              </div>
+                      <p className="mt-1 text-sm font-semibold text-slate-200">
+                        {selectedDentistData.dentists.toLocaleString()}
+                      </p>
+                    </div>
 
-              <p className="mt-3 text-sm font-semibold text-slate-200">
-                {selectedAccessGap.region}
-              </p>
+                    <div>
+                      <p className="text-[9px] text-slate-500">
+                        Density
+                      </p>
 
-              <p className="mt-2 text-xs leading-relaxed text-slate-400">
-                This region currently shows an elevated access-gap score
-                based on workforce density, screening coverage, disease
-                burden, and wait-list pressure.
-              </p>
+                      <p className="mt-1 text-sm font-semibold text-slate-200">
+                        {selectedDentistData.density}
+                      </p>
+                    </div>
 
-              <div className="mt-3">
-                <p className="text-[9px] uppercase tracking-wider text-slate-500">
-                  Access gap score
+                    <div>
+                      <p className="text-[9px] text-slate-500">
+                        Screening
+                      </p>
+
+                      <p className="mt-1 text-sm font-semibold text-slate-200">
+                        {selectedScreeningData.coverage}%
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-[9px] text-slate-500">
+                        Access gap
+                      </p>
+
+                      <p className="mt-1 text-sm font-semibold text-amber-400">
+                        {selectedAccessGap.access_gap_score}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p className="mt-3 text-xs text-slate-500">
+                  Regional data unavailable.
                 </p>
-
-                <p className="mt-1 text-2xl font-semibold text-amber-400">
-                  {selectedAccessGap.access_gap_score}
-                </p>
-              </div>
+              )}
             </div>
-          )}
 
-          <div className="mt-4 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
-              Data Scope
-            </h2>
+            {selectedAccessGap && (
+              <div className="mt-4 rounded-lg border border-amber-500/20 bg-[#0a0f16] p-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                    Key Signal
+                  </h2>
 
-            <div className="mt-3 space-y-3 text-xs">
-              <div>
-                <p className="text-[9px] uppercase tracking-wider text-slate-500">
-                  Geography
-                </p>
-
-                <p className="mt-1 text-slate-300">
-                  Gulf Cooperation Council
-                </p>
-              </div>
-
-              <div>
-                <p className="text-[9px] uppercase tracking-wider text-slate-500">
-                  Coverage
-                </p>
-
-                <p className="mt-1 text-slate-300">
-                  6 regions
-                </p>
-              </div>
-
-              <div>
-                <p className="text-[9px] uppercase tracking-wider text-slate-500">
-                  Dataset
-                </p>
-
-                <p className="mt-1 text-slate-300">
-                  Synthetic PoC dataset
-                </p>
-              </div>
-
-              <div>
-                <p className="text-[9px] uppercase tracking-wider text-slate-500">
-                  Analysis dimensions
-                </p>
-
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
-                    Disease burden
-                  </span>
-
-                  <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
-                    Workforce
-                  </span>
-
-                  <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
-                    Screening
-                  </span>
-
-                  <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
-                    Waiting lists
+                  <span className="rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-[9px] uppercase tracking-wider text-amber-400">
+                    High Priority
                   </span>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {selectedAccessGap && (
-            <div className="mt-4 rounded-lg border border-amber-500/20 bg-[#0a0f16] p-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xs font-semibold uppercase tracking-wider text-amber-400">
-                  Access Gap Signal
-                </h2>
+                <p className="mt-3 text-sm font-semibold text-slate-200">
+                  {selectedAccessGap.region}
+                </p>
 
-                <span className="rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-[9px] uppercase tracking-wider text-amber-400">
-                  Priority
-                </span>
-              </div>
+                <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                  This region currently shows an elevated access-gap score
+                  based on workforce density, screening coverage, disease
+                  burden, and wait-list pressure.
+                </p>
 
-              <p className="mt-3 text-sm font-semibold text-slate-200">
-                {selectedAccessGap.region}
-              </p>
-
-              <div className="mt-3 flex items-end justify-between">
-                <div>
+                <div className="mt-3">
                   <p className="text-[9px] uppercase tracking-wider text-slate-500">
                     Access gap score
                   </p>
@@ -863,24 +783,116 @@ export default function Home() {
                     {selectedAccessGap.access_gap_score}
                   </p>
                 </div>
+              </div>
+            )}
 
-                <div className="text-right">
+            <div className="mt-4 rounded-lg border border-slate-800 bg-[#0a0f16] p-4">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+                Data Scope
+              </h2>
+
+              <div className="mt-3 space-y-3 text-xs">
+                <div>
                   <p className="text-[9px] uppercase tracking-wider text-slate-500">
-                    Main pressure
+                    Geography
                   </p>
 
-                  <p className="mt-1 text-xs text-slate-300">
-                    {selectedAccessGap.dentist_density < 55
-                      ? "Low dentist density"
-                      : selectedAccessGap.screening_coverage < 65
-                        ? "Low screening coverage"
-                        : "Wait-list pressure"}
+                  <p className="mt-1 text-slate-300">
+                    Gulf Cooperation Council
                   </p>
+                </div>
+
+                <div>
+                  <p className="text-[9px] uppercase tracking-wider text-slate-500">
+                    Coverage
+                  </p>
+
+                  <p className="mt-1 text-slate-300">
+                    6 regions
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-[9px] uppercase tracking-wider text-slate-500">
+                    Dataset
+                  </p>
+
+                  <p className="mt-1 text-slate-300">
+                    Synthetic PoC dataset
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-[9px] uppercase tracking-wider text-slate-500">
+                    Analysis dimensions
+                  </p>
+
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
+                      Disease burden
+                    </span>
+
+                    <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
+                      Workforce
+                    </span>
+
+                    <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
+                      Screening
+                    </span>
+
+                    <span className="rounded border border-slate-700 px-2 py-1 text-[9px] text-slate-400">
+                      Waiting lists
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          )}
-        </aside>
+
+            {selectedAccessGap && (
+              <div className="mt-4 rounded-lg border border-amber-500/20 bg-[#0a0f16] p-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                    Access Gap Signal
+                  </h2>
+
+                  <span className="rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-[9px] uppercase tracking-wider text-amber-400">
+                    Priority
+                  </span>
+                </div>
+
+                <p className="mt-3 text-sm font-semibold text-slate-200">
+                  {selectedAccessGap.region}
+                </p>
+
+                <div className="mt-3 flex items-end justify-between">
+                  <div>
+                    <p className="text-[9px] uppercase tracking-wider text-slate-500">
+                      Access gap score
+                    </p>
+
+                    <p className="mt-1 text-2xl font-semibold text-amber-400">
+                      {selectedAccessGap.access_gap_score}
+                    </p>
+                  </div>
+
+                  <div className="text-right">
+                    <p className="text-[9px] uppercase tracking-wider text-slate-500">
+                      Main pressure
+                    </p>
+
+                    <p className="mt-1 text-xs text-slate-300">
+                      {selectedAccessGap.dentist_density < 55
+                        ? "Low dentist density"
+                        : selectedAccessGap.screening_coverage < 65
+                          ? "Low screening coverage"
+                          : "Wait-list pressure"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </aside>
+        )}
       </div>
     </main>
   );
