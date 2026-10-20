@@ -14,7 +14,10 @@ app = FastAPI(title="Dental & Oral Health Access Monitor")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://poc-31-dental-oral-health-access-monitor-joseph-bosco-c-bosco20.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
